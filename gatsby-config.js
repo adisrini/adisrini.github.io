@@ -1,17 +1,32 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `Aditya Srinivasan`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `Aditya Srinivasan`,
+      summary: `is a software engineer living and working in New York City.`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.app/`,
+    description: `My personal website.`,
+    siteUrl: `https://adisrini.github.io/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `adisrini11`,
+      goodreads: `adisrini`,
+      github: `adisrini`,
+      linkedin: `adisrini`,
     },
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.mdx`, `.md`],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+          },
+        ],
+        plugins: [`gatsby-remark-images`],
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {

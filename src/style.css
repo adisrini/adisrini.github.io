@@ -1,5 +1,7 @@
 /* CSS Custom Properties Definitions */
 
+@import url("https://fonts.googleapis.com/css2?family=Fira+Code&display=swap");
+
 :root {
   --maxWidth-none: "none";
   --maxWidth-xs: 20rem;
@@ -27,13 +29,10 @@
   --spacing-20: 5rem;
   --spacing-24: 6rem;
   --spacing-32: 8rem;
-  --fontFamily-sans: Montserrat, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --fontFamily-serif: "Merriweather", "Georgia", Cambria, "Times New Roman",
-    Times, serif;
-  --font-body: var(--fontFamily-serif);
-  --font-heading: var(--fontFamily-sans);
+  --fontFamily: "Fira Code", monospace, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
+  --font-body: var(--fontFamily);
+  --font-heading: var(--fontFamily);
   --fontWeight-normal: 400;
   --fontWeight-medium: 500;
   --fontWeight-semibold: 600;
@@ -54,7 +53,7 @@
   --fontSize-5: 2.074rem;
   --fontSize-6: 2.488rem;
   --fontSize-7: 2.986rem;
-  --color-primary: #005b99;
+  --color-primary: #31a77e;
   --color-text: #2e353f;
   --color-text-light: #4f5969;
   --color-heading: #1a202c;
@@ -231,6 +230,7 @@ table thead tr th {
 
 a {
   color: var(--color-primary);
+  text-decoration: none;
 }
 
 a:hover,
@@ -252,6 +252,11 @@ a:focus {
 
 .global-header {
   margin-bottom: var(--spacing-12);
+}
+
+.global-header > a {
+  margin-right: 20px;
+  font-weight: var(--fontWeight-semibold);
 }
 
 .main-heading {
@@ -286,9 +291,14 @@ a:focus {
   font-size: var(--fontSize-2);
 }
 
+/* Bio */
+
 .bio {
   display: flex;
   margin-bottom: var(--spacing-16);
+  padding: var(--spacing-5);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--spacing-3);
 }
 
 .bio p {
@@ -302,6 +312,12 @@ a:focus {
   border-radius: 100%;
 }
 
+.bio-social-link {
+  padding: var(--spacing-0) var(--spacing-2);
+}
+
+/* Blog Post */
+
 .blog-post header h1 {
   margin: var(--spacing-0) var(--spacing-0) var(--spacing-4) var(--spacing-0);
 }
@@ -313,10 +329,6 @@ a:focus {
 
 .blog-post-nav ul {
   margin: var(--spacing-0);
-}
-
-.gatsby-highlight {
-  margin-bottom: var(--spacing-8);
 }
 
 /* Media queries */

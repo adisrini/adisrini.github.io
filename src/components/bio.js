@@ -8,11 +8,13 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Image from "gatsby-image"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faGithub, faGoodreads, faLinkedin, faTwitter } from "@fortawesome/free-brands-svg-icons"
 
 const Bio = () => {
   const data = useStaticQuery(graphql`
     query BioQuery {
-      avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
+      avatar: file(absolutePath: { regex: "/profile.jpg/" }) {
         childImageSharp {
           fixed(width: 50, height: 50, quality: 95) {
             ...GatsbyImageSharpFixed
@@ -27,6 +29,9 @@ const Bio = () => {
           }
           social {
             twitter
+            goodreads
+            github
+            linkedin
           }
         }
       }
@@ -38,6 +43,19 @@ const Bio = () => {
   const social = data.site.siteMetadata?.social
 
   const avatar = data?.avatar?.childImageSharp?.fixed
+
+  const socialLink = (link, icon) => (
+    <a className="bio-social-link" href={link} target="_blank" rel="noreferrer">
+      <FontAwesomeIcon icon={icon} />
+    </a>
+  )
+
+  const links = [
+    socialLink(`https://twitter.com/${social?.twitter || ``}`, faTwitter)
+  , socialLink(`https://github.com/${social?.github || ``}`, faGithub)
+  , socialLink(`https://linkedin.com/in/${social?.linkedin || ``}`, faLinkedin)
+  , socialLink(`https://goodreads.com/${social?.goodreads || ``}`, faGoodreads)
+  ]
 
   return (
     <div className="bio">
@@ -51,13 +69,11 @@ const Bio = () => {
           }}
         />
       )}
-      {author?.name && (
+      {author?.name && social && (
         <p>
-          Written by <strong>{author.name}</strong> {author?.summary || null}
+          <strong>{author.name}</strong> {author?.summary || null}
           {` `}
-          <a href={`https://twitter.com/${social?.twitter || ``}`}>
-            You should follow them on Twitter
-          </a>
+          {links}
         </p>
       )}
     </div>
