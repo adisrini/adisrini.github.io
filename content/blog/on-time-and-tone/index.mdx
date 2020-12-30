@@ -1,0 +1,77 @@
+---
+title: On Time and Tone
+published_on: "2020-12-30"
+description: "Or: how I made my playlists update themselves."
+---
+
+In the taxonomy of my personal Spotify playlists, there are two phyla:
+**temporal** and **tonal**.
+
+**Temporal** playlists grow organically and without premeditation. Their purpose
+is to capture a sonic snapshot of a particular period, typically delimited by
+the beginning and end of the temperate seasons, thereby allowing me to relive
+the emotions of the time through its soundscape. When I find myself repeatedly
+listening to a song, I eventually add it to the playlist for the current period.
+In this way, these playlists grow quickly, all at once, and then not at all.
+Once a new season arrives, a new playlist is minted, and the old one becomes
+paralyzed, an audio time capsule frozen in time forevermore.
+
+**Tonal** playlists are more similar to the conventional playlist in nature, in
+that their constituent songs all share some common trait. For example, the songs
+in my running playlist all possess a fast, consistent tempo, whereas those in my
+study playlist possess a soothing instrumentality devoid of lyrical distraction.
+These playlists are harder to develop, and songs must be sought out with
+intentionality and purpose in order to curate the collection.
+
+Within the phylum of tonal playlists are two sub-classes. In order to name
+these, I'll borrow two terms from investing: [**passive** and **active**
+management](https://www.investopedia.com/news/active-vs-passive-investing/).
+
+Most of my tonal playlists begin as actively managed ones, as I spend the time
+and effort to sift through the dozens of candidate songs to which a few are
+granted admission. However, with time inevitably comes neglect, and the playlist
+eventually becomes passively managed, a fate similar to that of the temporal
+playlist.
+
+Except, while this fate is definitional for the temporal playlist, it is
+undesirable for the tonal one. An unchanging running playlist will fail to
+motivate me with the new and energizing beats I seek. A constant study playlist
+will eventually distract me with familiar and predictable melodies that disrupt
+my flow.
+
+I found myself wanting a way to automate the active management of my tonal
+playlists: a process that would evolve their content dynamically, while holding
+their essence constant.
+
+Enter THESEUS.
+
+---
+
+[THESEUS](https://adisrini.com/theseus) is an application I built that achieves
+the automatic active management I outlined above. The name pays homage to [the
+metaphysical question](https://en.wikipedia.org/wiki/Ship_of_Theseus) originally
+posed by Ancient Greek philosophers. In the context of playlists, specifically
+tonal ones, I’d venture to say that the playlist remains the same despite its
+constituent songs being substituted over time. The soul of the playlist is its
+ability to invoke particular feelings, which is greater than the mere sum of its
+parts.
+
+Once you register a playlist with THESEUS, it will slowly add songs to the
+playlist based on Spotify's Recommendations API. Eventually, it will remove old
+ones. In this way, the playlist will completely change over the course of time,
+while maintaining its essence. I’d encourage you to read the **How To** guide on
+the application page itself, since any documentation here is bound to grow
+stale.
+
+---
+
+Building THESEUS gave me the opportunity to use a variety of technologies, some
+familiar, others novel.
+
+The frontend web client was written using TypeScript, React, and Redux.
+Naturally, I used the Spotify API to retrieve and update user data.
+
+The backend was written using features from Google Firebase. In particular, I
+used Firestore to persist the set of playlists a user registers to be managed by
+THESEUS. I also used the pubsub feature of Functions to periodically run the job
+to update all user playlists.

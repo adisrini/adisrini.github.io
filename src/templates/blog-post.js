@@ -24,7 +24,7 @@ const BlogPostTemplate = ({ data, location }) => {
       >
         <header>
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
-          <p>{post.frontmatter.date}</p>
+          <p>{post.frontmatter.published_on}</p>
         </header>
         <MDXRenderer>{post.body}</MDXRenderer>
         <hr />
@@ -81,7 +81,7 @@ export const pageQuery = graphql`
       body
       frontmatter {
         title
-        date(formatString: "MMMM DD, YYYY")
+        published_on(formatString: "MMMM DD, YYYY")
         description
       }
     }

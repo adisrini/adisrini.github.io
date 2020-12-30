@@ -12,7 +12,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     `
       {
         allMdx(
-          sort: { fields: [frontmatter___date], order: ASC }
+          sort: { fields: [frontmatter___published_on], order: ASC }
           limit: 1000
         ) {
           nodes {
@@ -108,7 +108,8 @@ exports.createSchemaCustomization = ({ actions }) => {
     type Frontmatter {
       title: String
       description: String
-      date: Date @dateformat
+      published_on: Date @dateformat
+      updated_on: Date @dateformat
     }
 
     type Fields {
