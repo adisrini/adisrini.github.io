@@ -12,6 +12,7 @@ module.exports = {
       goodreads: `adisrini`,
       github: `adisrini`,
       linkedin: `adisrini`,
+      email: `aditya.srinivasan11@gmail.com`
     },
   },
   plugins: [
@@ -52,6 +53,7 @@ module.exports = {
         ],
       },
     },
+    `gatsby-remark-reading-time`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {

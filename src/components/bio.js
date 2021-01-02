@@ -9,6 +9,7 @@ import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Image from "gatsby-image"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons"
 import { faGithub, faGoodreads, faLinkedin, faTwitter } from "@fortawesome/free-brands-svg-icons"
 
 const Bio = () => {
@@ -32,6 +33,7 @@ const Bio = () => {
             goodreads
             github
             linkedin
+            email
           }
         }
       }
@@ -45,7 +47,7 @@ const Bio = () => {
   const avatar = data?.avatar?.childImageSharp?.fixed
 
   const socialLink = (link, icon) => (
-    <a className="bio-social-link" href={link} target="_blank" rel="noreferrer">
+    <a key={link} className="bio-social-link" href={link} target="_blank" rel="noreferrer">
       <FontAwesomeIcon icon={icon} />
     </a>
   )
@@ -55,6 +57,7 @@ const Bio = () => {
   , socialLink(`https://github.com/${social?.github || ``}`, faGithub)
   , socialLink(`https://linkedin.com/in/${social?.linkedin || ``}`, faLinkedin)
   , socialLink(`https://goodreads.com/${social?.goodreads || ``}`, faGoodreads)
+  , socialLink(`mailto:${social?.email || ``}`, faEnvelope)
   ]
 
   return (

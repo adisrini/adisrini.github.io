@@ -53,7 +53,7 @@
   --fontSize-5: 2.074rem;
   --fontSize-6: 2.488rem;
   --fontSize-7: 2.986rem;
-  --color-primary: #31a77e;
+  --color-primary: #28bd95;
   --color-text: #2e353f;
   --color-text-light: #4f5969;
   --color-heading: #1a202c;
@@ -330,6 +330,15 @@ a:focus {
 
 .blog-post-nav ul {
   margin: var(--spacing-0);
+}
+
+.blog-post-dates {
+  margin-bottom: var(--spacing-8);
+}
+
+.updated-on {
+  font-size: var(--fontSize-0);
+  color: var(--color-text-light);
 }
 
 /* Media queries */

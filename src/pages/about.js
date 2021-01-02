@@ -13,12 +13,12 @@ const About = ({ data, location }) => {
       <SEO title="About Me" />
       <Bio />
       <p>
-          I'm passionate about software development,
-          theoretical computer science, mathematics,
-          economics, and philosophy.
+        I'm passionate about topics in software development, computer
+        science, mathematics, finance, and philosophy.
       </p>
       <p>
-          Contact me via e-mail at `aditya [dot] srinivasan 11 [at] gmail`.
+        In my free time I like to read and write, consume and produce music,
+        and exercise.
       </p>
     </Layout>
   )

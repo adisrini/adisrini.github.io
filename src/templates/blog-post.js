@@ -1,6 +1,8 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
 import { MDXRenderer } from 'gatsby-plugin-mdx';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faHourglassHalf } from "@fortawesome/free-solid-svg-icons"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
@@ -24,7 +26,10 @@ const BlogPostTemplate = ({ data, location }) => {
       >
         <header>
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
-          <p>{post.frontmatter.published_on}</p>
+          <div className="blog-post-dates">
+            <span>{post.frontmatter.published_on}</span> • <FontAwesomeIcon icon={faHourglassHalf} /> {post.fields.readingTime.text} <br />
+            {post.frontmatter.updated_on && <span className="updated-on">Last updated: {post.frontmatter.updated_on}</span>}
+          </div>
         </header>
         <MDXRenderer>{post.body}</MDXRenderer>
         <hr />
@@ -82,7 +87,13 @@ export const pageQuery = graphql`
       frontmatter {
         title
         published_on(formatString: "MMMM DD, YYYY")
+        updated_on(formatString: "MMMM, DD, YYYY")
         description
+      }
+      fields {
+        readingTime {
+          text
+        }
       }
     }
     previous: mdx(id: { eq: $previousPostId }) {

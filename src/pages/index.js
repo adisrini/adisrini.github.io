@@ -44,7 +44,7 @@ const Index = ({ data, location }) => {
                       <span itemProp="headline">{title}</span>
                     </Link>
                   </h2>
-                  <small>{post.frontmatter.published_on}</small>
+                  <small>{post.frontmatter.published_on} • {post.fields.readingTime.text}</small>
                 </header>
                 <section>
                   <p
@@ -82,6 +82,11 @@ export const pageQuery = graphql`
           published_on(formatString: "MMMM DD, YYYY")
           title
           description
+        }
+        fields {
+          readingTime {
+            text
+          }
         }
       }
     }
