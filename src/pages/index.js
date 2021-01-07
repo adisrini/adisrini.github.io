@@ -1,13 +1,26 @@
-import React from "react"
+import React, { useState } from "react"
 import { Link, graphql } from "gatsby"
+import _ from "lodash"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import { getTags, renderTag } from "../utils/functions"
 
 const Index = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
-  const posts = data.allMdx.nodes
+  const allPosts = data.allMdx.nodes
+  const allPublishedPosts = allPosts.filter(post => !post.frontmatter.draft)
+
+  const [tagFilters, setTagFilters] = useState([])
+
+  const addTagFilter = (tag) => setTagFilters(_.uniq([...tagFilters, tag]))
+  const removeTagFilter = (tag) => setTagFilters(_.uniq(tagFilters.filter(x => x !== tag)))
+
+  const posts =
+    tagFilters.length > 0
+    ? allPublishedPosts.filter(post =>_.some(tagFilters, tag => post.frontmatter[tag] || _.find(post.frontmatter.tags, x => x === tag)))
+    : allPublishedPosts;
 
   if (posts.length === 0) {
     return (
@@ -15,9 +28,7 @@ const Index = ({ data, location }) => {
         <SEO title="All posts" />
         <Bio />
         <p>
-          No blog posts found. Add markdown posts to "content/blog" (or the
-          directory you specified for the "gatsby-source-filesystem" plugin in
-          gatsby-config.js).
+          No blog posts found.
         </p>
       </Layout>
     )
@@ -27,9 +38,16 @@ const Index = ({ data, location }) => {
     <Layout location={location} title={siteTitle}>
       <SEO title="All posts" />
       <Bio />
+      {tagFilters && tagFilters.length > 0 &&
+        <div className="tag-filters">
+          <p><strong>Active Filters</strong></p>
+          {tagFilters.map((tag, index) => renderTag(tag, index, removeTagFilter, true))}
+        </div>}
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
           const title = post.frontmatter.title || post.fields.slug
+
+          const tags = getTags(post)
 
           return (
             <li key={post.fields.slug}>
@@ -45,6 +63,7 @@ const Index = ({ data, location }) => {
                     </Link>
                   </h2>
                   <small>{post.frontmatter.published_on} • {post.fields.readingTime.text}</small>
+                  <div>{tags.map((tag, index) => renderTag(tag, index, addTagFilter))}</div>
                 </header>
                 <section>
                   <p
@@ -82,6 +101,9 @@ export const pageQuery = graphql`
           published_on(formatString: "MMMM DD, YYYY")
           title
           description
+          tags
+          draft
+          bookish
         }
         fields {
           readingTime {

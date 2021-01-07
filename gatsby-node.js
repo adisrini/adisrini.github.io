@@ -106,10 +106,12 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
 
     type Frontmatter {
-      title: String
+      title: String!
       description: String
-      published_on: Date @dateformat
+      published_on: Date! @dateformat
       updated_on: Date @dateformat
+      bookish: [String!]
+      tags: [String!]
     }
 
     type Fields {
