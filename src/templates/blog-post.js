@@ -13,7 +13,7 @@ const joinEnglish = (array) => {
   return array.reduce((acc, curr, i) => [
     ...acc,
     i === 0 ? '' : i < array.length - 1 ? ', ' : ', and ',
-    <strong>{curr}</strong>
+    <strong key={i}>{curr}</strong>
   ], [])
 }
 

@@ -1,0 +1,38 @@
+---
+title: "Gemini: A Functional Hardware Description Language"
+published_on: "2021-01-07"
+type: "project"
+draft: false
+tags: ["compilers", "hardware"]
+---
+
+import { withPrefix } from "gatsby"
+
+For my undergraduate senior thesis, I set out to solve the following problem:
+**Verilog and other HDLs lack the expressivity and modularity of modern software
+programming languages, due to a lack of features such as a strong type system,
+recursion, pattern-matching, polymorphism, higher-order functions, and more.**
+
+Specifically, I aimed to answer the following two questions:
+
+1. Can I design a programming language that combines the powerful features of
+software programming languages with the ability to describe electronic circuits?
+
+2. Can I develop a compiler that accepts a program in this language and produces
+an optimized Verilog module?
+
+Over the course of a year, I determined the answer to both of these questions to
+be **yes**, and the result was a programming language called Gemini.
+
+Along the way, I demonstrated with my prototype that novel type-theoretic
+concepts could be translated into concrete implementation. These concepts
+included a type system with multiple kinds, dependent types, multi-phase
+compilation, and "time as a type".
+
+An extended version of my thesis can be found
+[online](https://arxiv.org/abs/1911.03926), and my thesis presentation can be
+found [here](/presentation.pdf).
+
+Further, one can also look at developer-oriented
+[documentation](https://zealous-swanson-536aa0.netlify.app/#/) and the [source
+code](https://github.com/adisrini/gemini-lang) for more detail.

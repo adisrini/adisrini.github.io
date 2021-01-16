@@ -26,6 +26,9 @@ const Layout = ({ location, title, children }) => {
         <a href={data.cv.publicURL} target="_blank" rel="noreferrer">
           CV
         </a>
+        <Link to="/projects">
+          Projects
+        </Link>
       </header>
       <main>{children}</main>
       <footer>

@@ -112,6 +112,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       updated_on: Date @dateformat
       bookish: [String!]
       tags: [String!]
+      type: String!
     }
 
     type Fields {

@@ -2,9 +2,9 @@ import React from "react"
 import Posts from "../components/posts"
 import { graphql } from "gatsby"
 
-const Index = ({ data, location }) => <Posts data={data} location={location} type="blog-post" />
+const Projects = ({ data, location }) => <Posts data={data} location={location} type="project" />
 
-export default Index
+export default Projects
 
 export const pageQuery = graphql`
   query {
