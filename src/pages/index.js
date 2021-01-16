@@ -12,14 +12,16 @@ const Index = ({ data, location }) => {
   const allPosts = data.allMdx.nodes
   const allPublishedPosts = allPosts.filter(post => !post.frontmatter.draft)
 
-  const [tagFilters, setTagFilters] = useState([])
+  const [activeTags, setActiveTags] = useState([])
 
-  const addTagFilter = (tag) => setTagFilters(_.uniq([...tagFilters, tag]))
-  const removeTagFilter = (tag) => setTagFilters(_.uniq(tagFilters.filter(x => x !== tag)))
+  const addActiveTag = (tag) => setActiveTags(_.uniq([...activeTags, tag]))
+  const removeActiveTag = (tag) => setActiveTags(_.uniq(activeTags.filter(x => x !== tag)))
+  
+  const allTags = _.uniq(_.flatten(allPosts.map(post => getTags(post))))
 
   const posts =
-    tagFilters.length > 0
-    ? allPublishedPosts.filter(post =>_.some(tagFilters, tag => post.frontmatter[tag] || _.find(post.frontmatter.tags, x => x === tag)))
+    activeTags.length > 0
+    ? allPublishedPosts.filter(post =>_.some(activeTags, tag => post.frontmatter[tag] || _.find(post.frontmatter.tags, x => x === tag)))
     : allPublishedPosts;
 
   if (posts.length === 0) {
@@ -34,15 +36,20 @@ const Index = ({ data, location }) => {
     )
   }
 
+  console.log(allTags)
+  console.log(activeTags)
+
   return (
     <Layout location={location} title={siteTitle}>
       <SEO title="All posts" />
       <Bio />
-      {tagFilters && tagFilters.length > 0 &&
-        <div className="tag-filters">
-          <p><strong>Active Filters</strong></p>
-          <div className="tags">{tagFilters.map((tag, index) => renderTag(tag, index, removeTagFilter, true))}</div>
-        </div>}
+        <span><strong>Categories</strong></span><br />
+        <small>Select one or more to filter posts.</small>
+        <div className="tags">{allTags.map((tag, index) => {
+          const isActive = _.some(activeTags, activeTag => activeTag === tag)
+          const action = isActive ? removeActiveTag : addActiveTag
+          return renderTag(tag, index, action, !isActive)
+        })}</div>
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
           const title = post.frontmatter.title || post.fields.slug
@@ -63,7 +70,7 @@ const Index = ({ data, location }) => {
                     </Link>
                   </h2>
                   <small>{post.frontmatter.published_on} • {post.fields.readingTime.text}</small>
-                  <div className="tags">{tags.map((tag, index) => renderTag(tag, index, addTagFilter))}</div>
+                  <div className="tags">{tags.map((tag, index) => renderTag(tag, index, addActiveTag))}</div>
                 </header>
                 <section>
                   <p

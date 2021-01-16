@@ -274,13 +274,6 @@ a:focus {
   margin: 0;
 }
 
-.tag-filters {
-  background-color: var(--color-primary-light);
-  padding: var(--spacing-4);
-  border: 1px solid var(--color-accent);
-  border-radius: var(--borderRadius);
-}
-
 .post-list-item {
   margin-bottom: var(--spacing-8);
   margin-top: var(--spacing-16);
@@ -317,6 +310,11 @@ a:focus {
   margin-right: var(--spacing-2);
   border-radius: var(--borderRadius);
   text-transform: uppercase;
+  opacity: 1;
+}
+
+.tag-inactive {
+  opacity: 0.5;
 }
 
 .tag-clickable {

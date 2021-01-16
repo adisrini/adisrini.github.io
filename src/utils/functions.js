@@ -6,15 +6,14 @@ export const getTags = post => _.concat(
     post.frontmatter.tags || []
 )
 
-export const renderTag = (tag, index, onClick, withDelete) =>
+export const renderTag = (tag, index, onClick, isInactive) =>
     <small
       key={tag}
       onClick={onClick && (() => onClick(tag))}
       onKeyDown={onClick && (() => onClick(tag))}
       role="button"
       tabIndex={index}
-      className={['tag', `tag-${tag}`, onClick ? 'tag-clickable' : ''].join(' ')}>
+      className={['tag', `tag-${tag}`, isInactive ? 'tag-inactive' : '', onClick ? 'tag-clickable' : ''].join(' ')}>
       <strong>{tag}</strong>
-      {withDelete && ' x'}
     </small>
 
