@@ -54,7 +54,7 @@ const BlogPostTemplate = ({ data, location }) => {
             <span>{post.frontmatter.published_on}</span> • <FontAwesomeIcon icon={faHourglassHalf} /> {post.fields.readingTime.text} <br />
             {post.frontmatter.updated_on && <span className="updated-on">Last updated: {post.frontmatter.updated_on}</span>}
           </div>
-          <div>{tags.map((tag, index) => renderTag(tag, index))}</div>
+          <div className="tags">{tags.map((tag, index) => renderTag(tag, index))}</div>
         </header>
         {bookishHeader}
         <div className="blog-post-body">

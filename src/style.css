@@ -63,8 +63,10 @@
   --color-warning: #fffaec;
   --color-warning-dark: #d4ad5a;
   --color-link: #ffd9a17b;
-  --color-bookish-tag: #df8c27;
-  --color-project-tag: #3372df;
+  --color-bookish-tag: #fae2d3;
+  --color-bookish-tag-text: #e76337;
+  --color-project-tag: #e1e9fd;
+  --color-project-tag-text: #4495c6;
   --borderRadius: 10px;
 }
 
@@ -306,12 +308,15 @@ a:focus {
   font-size: var(--fontSize-2);
 }
 
+.tags {
+  margin-top: var(--spacing-2);
+}
+
 .tag {
-  padding: 0 var(--spacing-2);
+  padding: var(--spacing-1) var(--spacing-2);
   margin-right: var(--spacing-2);
-  border-radius: 5px;
-  color: var(--color-text);
-  border: 1px solid var(--color-text);
+  border-radius: var(--borderRadius);
+  text-transform: uppercase;
 }
 
 .tag-clickable {
@@ -319,13 +324,13 @@ a:focus {
 }
 
 .tag-bookish {
-  color: var(--color-bookish-tag);
-  border: 1px solid var(--color-bookish-tag);
+  background: var(--color-bookish-tag);
+  color: var(--color-bookish-tag-text);
 }
 
 .tag-project {
-  color: var(--color-project-tag);
-  border: 1px solid var(--color-project-tag);
+  background: var(--color-project-tag);
+  color: var(--color-project-tag-text);
 }
 
 /* Bio */

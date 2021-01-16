@@ -41,7 +41,7 @@ const Index = ({ data, location }) => {
       {tagFilters && tagFilters.length > 0 &&
         <div className="tag-filters">
           <p><strong>Active Filters</strong></p>
-          {tagFilters.map((tag, index) => renderTag(tag, index, removeTagFilter, true))}
+          <div className="tags">{tagFilters.map((tag, index) => renderTag(tag, index, removeTagFilter, true))}</div>
         </div>}
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
@@ -63,7 +63,7 @@ const Index = ({ data, location }) => {
                     </Link>
                   </h2>
                   <small>{post.frontmatter.published_on} • {post.fields.readingTime.text}</small>
-                  <div>{tags.map((tag, index) => renderTag(tag, index, addTagFilter))}</div>
+                  <div className="tags">{tags.map((tag, index) => renderTag(tag, index, addTagFilter))}</div>
                 </header>
                 <section>
                   <p
