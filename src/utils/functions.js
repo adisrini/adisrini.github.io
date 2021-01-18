@@ -13,7 +13,7 @@ export const renderTag = (tag, index, onClick, isInactive) =>
       onKeyDown={onClick && (() => onClick(tag))}
       role="button"
       tabIndex={index}
-      className={['tag', `tag-${tag}`, isInactive ? 'tag-inactive' : '', onClick ? 'tag-clickable' : ''].join(' ')}>
+      className={['tag', `tag-${tag.split(' ').join('-')}`, isInactive ? 'tag-inactive' : '', onClick ? 'tag-clickable' : ''].join(' ')}>
       <strong>{tag}</strong>
     </small>
 

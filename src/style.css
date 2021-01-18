@@ -71,6 +71,8 @@
   --color-compilers-tag-text: #32373e;
   --color-hardware-tag: #dffdd5;
   --color-hardware-tag-text: #53b671;
+  --color-computer-vision-tag: #fbecef;
+  --color-computer-vision-tag-text: #c53451;
   --color-default-tag: #eaeaea;
   --color-default-tag-text: #555555;
   --borderRadius: 10px;
@@ -289,8 +291,7 @@ a:focus {
   margin-bottom: var(--spacing-0);
 }
 
-.post-list-item h2 {
-  font-size: var(--fontSize-4);
+.post-list-item h4 {
   color: var(--color-primary);
   margin-bottom: var(--spacing-2);
   margin-top: var(--spacing-0);
@@ -348,6 +349,11 @@ a:focus {
 .tag-hardware {
   background: var(--color-hardware-tag);
   color: var(--color-hardware-tag-text);
+}
+
+.tag-computer-vision {
+  background: var(--color-computer-vision-tag);
+  color: var(--color-computer-vision-tag-text);
 }
 
 /* Bio */
@@ -424,6 +430,14 @@ a:focus {
   width: 270px;
   float: left;
   margin-right: var(--spacing-4);
+}
+
+.before-after {
+  display: flex;
+}
+
+.before-after * {
+  width: 100%;
 }
 
 /* Media queries */
