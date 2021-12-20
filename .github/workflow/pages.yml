@@ -20,5 +20,5 @@ jobs:
 
     - run: yarn deploy
       env:
-        PA_TOKEN: ${{ secrets.PA_TOKEN }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
         CI: true
