@@ -1,12 +1,14 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
-import { MDXRenderer } from 'gatsby-plugin-mdx';
+import { MDXProvider } from "@mdx-js/react"
+import { MDXRenderer } from 'gatsby-plugin-mdx'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faHourglassHalf } from "@fortawesome/free-solid-svg-icons"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import CodeBlock from "../components/codeblock"
 import { getTags, renderTag } from "../utils/functions"
 
 const joinEnglish = (array) => {
@@ -15,6 +17,10 @@ const joinEnglish = (array) => {
     i === 0 ? '' : i < array.length - 1 ? ', ' : ', and ',
     <strong key={i}>{curr}</strong>
   ], [])
+}
+
+const components = {
+  pre: CodeBlock
 }
 
 const BlogPostTemplate = ({ data, location }) => {
@@ -58,7 +64,9 @@ const BlogPostTemplate = ({ data, location }) => {
         </header>
         {bookishHeader}
         <div className="blog-post-body">
-          <MDXRenderer>{post.body}</MDXRenderer>
+          <MDXProvider components={components}>
+            <MDXRenderer>{post.body}</MDXRenderer>
+          </MDXProvider>
         </div>
         <footer>
           <Bio />

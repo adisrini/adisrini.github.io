@@ -248,18 +248,6 @@ table thead tr th {
   border-bottom: 1px solid var(--color-accent);
 }
 
-pre {
-  background-color: #0f172a;
-  border-radius: var(--borderRadius);
-  padding: var(--spacing-3);
-  overflow-x: auto;
-}
-
-pre > code[class*="language-"] {
-  color: var(--color-primary-light);
-  text-shadow: none;
-}
-
 /* Link */
 
 a {
