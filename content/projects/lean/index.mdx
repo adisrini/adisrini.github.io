@@ -1,0 +1,64 @@
+---
+title: "Proving Type Safety in Lean"
+published_on: "2021-12-03"
+type: "project"
+draft: false
+tags: ["pl"]
+---
+
+import { BlockMath as BM, InlineMath as IM } from "react-katex"
+
+For my final project in [CS242](https://web.stanford.edu/class/cs242/), I used
+the [Lean](https://leanprover.github.io/) theorem prover to prove type safety
+for a small, toy language.
+
+In order to prove type safety, I proved three distinct properties:
+
+**Theorem** (Progress): For any expression <IM>e</IM>, either <IM>e</IM> is a value, or there exists <IM>e'</IM> such that <IM>e</IM> evaluates to <IM>e'</IM> in one step. Formally, <IM>\forall e \in \mathcal{E}. e \textbf{ val} \vee (\exists e' \in \mathcal{E}. e \mapsto e')</IM>.
+
+**Theorem** (Totality): For any expression <IM>e</IM>, there exists <IM>e'</IM> such that <IM>e'</IM> is a value and <IM>e</IM> evaluates to <IM>e'</IM> in zero or more steps. Formally, <IM>\forall e \in \mathcal{E}. \exists e' \in \mathcal{E}. e' \textbf{ val} \wedge e \mapsto^* e'</IM>.
+
+**Theorem** (Preservation): If <IM>e</IM> is a natural number in the initial type environment, and <IM>e</IM> evaluates to <IM>e'</IM> in one step, then <IM>e'</IM> is a natural number in the initial type environment. Formally, <IM>\forall e, e' \in \mathcal{E}. 0 \vdash e : \textbf{ nat} \wedge e \mapsto e' \rightarrow 0 \vdash e' : \textbf{ nat}</IM>.
+
+Lean's type system is more advanced than that of any other language I have used.
+It is based on a version of [dependent type
+theory](https://en.wikipedia.org/wiki/Dependent_type) known as the [calculus of
+constructions](https://en.wikipedia.org/wiki/Calculus_of_constructions)[^1],
+with a countable hierarchy[^2] of non-cumulative universes and inductive types.
+This powerful type system provides the necessary power and expressivity to
+formalize proofs about complex systems within the language.
+
+Although there are many ways to write proofs in Lean, I mostly used
+[tactics](https://leanprover.github.io/theorem_proving_in_lean/tactics.html). As
+described in the documentation, tactics "support an incremental style of writing
+proofs, in which users decompose a proof and work on goals one step at a time".
+
+There's a special tactic called `sorry`, which automatically satisfies the
+relevant goal in scope, though it also displays a warning at the enclosing
+theorem or lemma, since the proof is technically incomplete. This led to a very
+pleasant programming experience, since I was able to stub out the complicated
+parts of the proof with `sorry`, work on the easier bits, and then revisit the
+harder ones once I was confident that the proof structure was sound. In fact, we
+often do this in programming. In OCaml, for example, you can stub out a function
+as follows:
+
+```ocaml
+let fib (x : int) : int = raise_s [%message "Not implemented!"]
+```
+
+This will type-check[^3], letting you use `fib` in the rest of your program as
+if it were implemented correctly.
+
+## Footnotes
+[^1] This type theory is also the basis of other proof assistants, such as
+[Coq](https://en.wikipedia.org/wiki/Coq). 
+
+[^2] The type theory utilizes a hierarchy of such universes in order to avoid
+[Girard's paradox](https://en.wikipedia.org/wiki/System_U#Girard's_paradox), the
+type-theoretical equivalent of [Russell's
+paradox](https://en.wikipedia.org/wiki/Russell%27s_paradox).
+
+[^3] Interestingly, this exposes a deficiency of OCaml as it exists today, which
+is that it doesn't support algebraic effects. If it did, the function signature
+may encode the fact that it throws an exception (e.g. using some imaginary
+syntax, `int -> int exn`), which is different from the desired signature.

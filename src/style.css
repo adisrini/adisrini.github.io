@@ -67,12 +67,14 @@
   --color-bookish-tag-text: #e76337;
   --color-project-tag: #e1e9fd;
   --color-project-tag-text: #4495c6;
-  --color-compilers-tag: #dbd9e6;
-  --color-compilers-tag-text: #32373e;
+  --color-compilers-tag: #ffedd5;
+  --color-compilers-tag-text: #ea580c;
   --color-hardware-tag: #dffdd5;
   --color-hardware-tag-text: #53b671;
   --color-computer-vision-tag: #fbecef;
   --color-computer-vision-tag-text: #c53451;
+  --color-pl-tag: #ede9fe;
+  --color-pl-tag-text: #7c3aed;
   --color-default-tag: #eaeaea;
   --color-default-tag-text: #555555;
   --color-code-text: #f06292;
@@ -246,6 +248,18 @@ table thead tr th {
   border-bottom: 1px solid var(--color-accent);
 }
 
+pre {
+  background-color: #0f172a;
+  border-radius: var(--borderRadius);
+  padding: var(--spacing-3);
+  overflow-x: auto;
+}
+
+pre > code[class*="language-"] {
+  color: var(--color-primary-light);
+  text-shadow: none;
+}
+
 /* Link */
 
 a {
@@ -356,6 +370,11 @@ a:focus {
 .tag-computer-vision {
   background: var(--color-computer-vision-tag);
   color: var(--color-computer-vision-tag-text);
+}
+
+.tag-pl {
+  background: var(--color-pl-tag);
+  color: var(--color-pl-tag-text);
 }
 
 /* Bio */
