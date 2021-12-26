@@ -50,15 +50,15 @@ This will type-check[^3], letting you use `fib` in the rest of your program as
 if it were implemented correctly.
 
 ## Footnotes
-[^1] This type theory is also the basis of other proof assistants, such as
+[^1]: This type theory is also the basis of other proof assistants, such as
 [Coq](https://en.wikipedia.org/wiki/Coq). 
 
-[^2] The type theory utilizes a hierarchy of such universes in order to avoid
+[^2]: The type theory utilizes a hierarchy of such universes in order to avoid
 [Girard's paradox](https://en.wikipedia.org/wiki/System_U#Girard's_paradox), the
 type-theoretical equivalent of [Russell's
-paradox](https://en.wikipedia.org/wiki/Russell%27s_paradox).
+paradox](https://en.wikipedia.org/wiki/Russell%27s_paradox). 
 
-[^3] Interestingly, this exposes a deficiency of OCaml as it exists today, which
+[^3]: Interestingly, this exposes a deficiency of OCaml as it exists today, which
 is that it doesn't support algebraic effects. If it did, the function signature
 may encode the fact that it throws an exception (e.g. using some imaginary
-syntax, `int -> int exn`), which is different from the desired signature.
+syntax, `int -> int exn`), which is different from the desired signature. 
