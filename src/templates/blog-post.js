@@ -55,7 +55,7 @@ const BlogPostTemplate = ({ data, location }) => {
         itemType="http://schema.org/Article"
       >
         <header>
-          <h1 itemProp="headline">{post.frontmatter.title}{post.frontmatter.draft && " [DRAFT]"}</h1>
+          <h2 itemProp="headline">{post.frontmatter.title}{post.frontmatter.draft && " [DRAFT]"}</h2>
           <div>
             <span>{post.frontmatter.published_on}</span> • <FontAwesomeIcon icon={faHourglassHalf} /> {post.fields.readingTime.text} <br />
             {post.frontmatter.updated_on && <span className="updated-on">Last updated: {post.frontmatter.updated_on}</span>}
