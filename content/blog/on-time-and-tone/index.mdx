@@ -1,86 +1,77 @@
 ---
-title: On Time and Tone
-published_on: "2020-12-31"
-updated_on: "2021-01-01"
-description: "Or: how I taught my playlists to update themselves."
+title: One Million Meters
+published_on: "2022-08-09"
 type: "blog-post"
 draft: false
-tags: ['project']
+tags: ["misc"]
 ---
 
-In the taxonomy of my personal Spotify playlists, there are two phyla:
-**temporal** and **tonal**.
+At the beginning of this year, I set several goals for myself, one of which was
+to run 1,000 kilometers (approximately 620 miles). Today, with about 40% of the
+year still remaining, I hit that goal.
 
-**Temporal** playlists grow organically and without premeditation. Their purpose
-is to capture the zeitgeist particular period, typically delimited by the
-beginning and end of the temperate seasons, thereby allowing me to relive the
-emotions of the time through its soundscape. When I find myself repeatedly
-listening to a song, I eventually add it to the playlist for the current period.
-In this way, these playlists grow quickly, all at once, and then not at all.
-Once a new season arrives, a new playlist is minted, and the old one becomes
-paralyzed, an audio time capsule frozen in time forevermore.
+Ever since elementary school, I've enjoyed being active and playing sports,
+though my preferred mode of exercise has varied considerably throughout the
+years.
 
-**Tonal** playlists are more similar to the conventional playlist in nature, in
-that their constituent songs all share some common trait. For example, the songs
-in my running playlist all possess a fast, consistent tempo, whereas those in my
-study playlist possess a soothing instrumentality devoid of lyrical distraction.
-These playlists are harder to develop, and songs must be sought out with
-intentionality and purpose in order to curate the collection.
+Until about halfway through high school, the only physical activity I enjoyed
+was playing team sports such as soccer, field hockey, cricket, basketball, and
+volleyball. I had never really set foot in a gym unless mandated by a P.E.
+class. I despised mile runs, even though I ran several in the course of a game.
+When I stepped onto the court/field, I got absorbed by the thrill of competition
+and awashed with waves of adrenaline, only realizing my physical exhaustion long
+after the game had ended.
 
-Within the phylum of tonal playlists are two sub-classes. In order to name
-these, I'll borrow two terms from investing: [**passive** and **active**
-management](https://www.investopedia.com/news/active-vs-passive-investing/).
+I began lifting weights with my soccer co-captain in the 10th grade. We had
+reached the point in our adolescent soccer careers when sheer athleticism and
+energy was insufficient to guarantee victory. We needed strength in order to
+stand our ground on the field. We would squat until our legs wobbled, bench
+until our chests gave up, deadlift until our lower backs admitted defeat. We
+were always in control, careful to avoid injury, but we took it very seriously.
 
-Most of my tonal playlists begin as actively managed ones, as I spend the time
-and effort to sift through the dozens of candidate songs to which a few are
-granted admission. However, with time inevitably comes neglect, and the playlist
-eventually becomes passively managed, a fate similar to that of the temporal
-playlist.
+I continued lifting weights all throughout high school, college, and beyond. I'd
+set goals for myself, achieve them, and then set some more. Whenever I
+travelled, I was sure to find a local gym to get my workout for the day in. If
+there were no gyms around, I would get creative with my own bodyweight and the
+help of any furniture or props around me. Backpacks made great substitutes for
+dumbbells.
 
-Except, while this fate is definitional for the temporal playlist, it is
-undesirable for the tonal one. An unchanging running playlist will fail to
-motivate me with the new and energizing beats I seek. A constant study playlist
-will eventually distract me with familiar and predictable melodies that disrupt
-my flow.
+This continued until March 2020. All of a sudden, gyms shut down, and I had to
+make do with a jury-rigged gym setup at home. Over time, I found my workouts
+becoming less and less satisfying, and began to experiment with some
+alternatives. That's how I discovered an unlikely love for running.
 
-I found myself wanting a way to automate the active management of my tonal
-playlists: a process that would evolve their content dynamically, while holding
-their essence constant.
+Running had long been anathema. Cardio counteracted all the hard work I put into
+strength training, or so I'd been told.
 
-Enter THESEUS.
+I began running outside, along Manhattan's East River. Initially, I ran as a
+warmup before the "real" workout: lifting weights. However, I gradually started
+running longer and longer, promoting running from merely the opening act, to the
+star of the show.
 
----
+The path I ran along stretched out 4 kilometers south, at which point I'd turn
+around. Some days I couldn't run the full 8K, in which case I'd just turn around
+early. Other days, I felt like I could run forever, in which case I'd loop back
+around for an extra few kilometers.
 
-[THESEUS](https://adisrini.com/theseus) is an application I built that achieves
-the automatic active management I outlined above. The name pays homage to [the
-metaphysical question](https://en.wikipedia.org/wiki/Ship_of_Theseus) originally
-posed by Ancient Greek philosophers. In the context of playlists, specifically
-tonal ones, I’d venture to say that the playlist remains the same despite its
-constituent songs being substituted over time. The soul of the playlist is its
-ability to invoke particular feelings, which is greater than the mere sum of its
-parts.
+The feeling after a long run is hard to put into words. Paradoxically, there's a
+sense of heightened energy, accompanied by an increased focus, with notes of
+euphoria, all against a backdrop of pride and satisfaction. I run in the
+mornings, and a good run sets the rest of my day up perfectly.
 
-Once you register a playlist with THESEUS, it will slowly add songs to the
-playlist based on Spotify's Recommendations API. Eventually, it will remove old
-ones. In this way, the playlist will completely change over the course of time,
-while maintaining its essence. I’d encourage you to read the **How To** guide on
-the application page itself, since any documentation here is bound to grow
-stale.
+I'd always wondered what people think about while running. I used to view it
+as such a chore, something that required a strong distraction like a TV show or
+podcast to avert your attention from the immensely boring and taxing activity
+you were putting your body through.
 
----
+But now I view it as a valuable opportunity to think deeply. I'll still put on
+some music for some background ambience, but once I get into the rhythm of a
+run, typically around the 1 kilometer mark, I can switch on autopilot and get
+completely lost in my thoughts. I'll swirl around ideas and update my mental
+to-do list. It's astonishing how many problems I've been able to solve midway
+through a run. After a run, and sometimes during one, I'll scribble all my
+thoughts down to make sure they're preserved.
 
-Building THESEUS gave me the opportunity to use a variety of technologies, some
-familiar, others novel.
-
-The frontend web client was written using TypeScript, React, and Redux.
-Naturally, I used the Spotify API to retrieve and update user data.
-
-The backend was written using features from Google Firebase. In particular, I
-used Firestore to persist the set of playlists a user registers to be managed by
-THESEUS. I also used the pubsub feature of Functions to periodically run the job
-to update all user playlists.
-
----
-
-So, I hope you give THESEUS a try – it's quite simple to get started. If you do,
-let me know what you think!
+With so much of the year still left, I'm setting a stretch goal to hit 1,000
+miles (approximately 1,600 kilometers). I may hit it, or I may not, but I'll
+continue to enjoy running either way.

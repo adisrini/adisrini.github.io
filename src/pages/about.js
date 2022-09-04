@@ -18,7 +18,7 @@ const About = ({ data, location }) => {
       </p>
       <p>
         In my free time I like to read and write, consume and produce music,
-        and exercise.
+        and run.
       </p>
     </Layout>
   )

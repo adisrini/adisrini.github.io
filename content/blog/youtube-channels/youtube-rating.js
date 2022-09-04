@@ -4,8 +4,6 @@ import HourglassEmptyIcon from '@mui/icons-material/HourglassEmpty';
 import HourglassBottomIcon from '@mui/icons-material/HourglassBottom';
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import StarIcon from '@mui/icons-material/Star';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 const YoutubeRating = (props) => {
   return (

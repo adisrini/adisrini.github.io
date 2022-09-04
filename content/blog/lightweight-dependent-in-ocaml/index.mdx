@@ -1,0 +1,208 @@
+---
+title: "Lightweight Dependent Types in OCaml"
+published_on: "2022-01-23"
+type: "blog-post"
+tags: ["pl"]
+draft: true
+---
+
+import { InlineMath as IM } from "react-katex"
+
+### Introduction
+
+[Dependent typing](https://en.wikipedia.org/wiki/Dependent_type) is a powerful
+feature of systems, though it is endowed to few mainstream programming
+languages[^1]. This isn't all that surprising for at least two reasons For one,
+there are many features of programming languages for which the journey from
+being theorized to being implemented and widely available in common programming
+languages is long and slow[^2]. Second, dependent types add complexity to the
+type system, both to the programmer who needs to learn what they are, as well as
+to the compiler which may need to evaluate costly expressions in order to
+determine type-equality during type-checking.
+
+However, all is not lost! Even languages without first-class support for
+dependent types can be coerced into providing something resembling (admittedly,
+a much weaker version of) it. I decided to try this out with OCaml, which does
+not support dependent types in a first-class way, but does have a sophisticated
+type system. (It's worth saying that I set out to do this purely for fun; this
+is almost certainly not something I'd want to find in an actual production
+codebase.)
+
+Throughout the course of this post, we'll build up a representation of a list
+that encodes its length in its type, as well as a function that lets one index
+into the list **safely**. That is, at compile-time one can be guaranteed to
+avoid indexing out-of-bounds. To reiterate, this is far from fully-fledged
+dependent typing, but it gives us a taste.
+
+Finally, I won't assume the reader has a deep familiarity with OCaml or other
+languages in the ML family, and will attempt to explain things as I go.
+
+### Plain Ol' Non-Dependent Types
+
+First, what do lists and indexing look like with the native types provided by
+the OCaml standard library?
+
+```ocaml
+type 'a list =
+    | []
+    | ( :: ) of 'a * 'a list
+```
+
+We'll make two observations about this type definition. First, this type is
+polymorphic. This means that `list` is a "type constructor", as opposed to a
+concrete type itself. It can be thought of as a "function" operating on types.
+So, if we apply the type constructor `list` to a concrete type `int`, we get a
+concrete type `int list`. We can apply this to arbitrary depth; applying the
+type constructor `list` to concrete type `int list` yields the concrete type
+`int list list`.
+
+Second, this type is defined inductively. There are many names for types like
+this, including sum types and union types, but the inductive definition seems
+natural to me. The "base case" for constructing a list is the empty list: `[]`.
+The "inductive case" for constructing a list says: "if you have an element
+(`'a`) and a list of those elements (`'a list`), you can construct another list
+(`'a list`) that is semantically the concatenation of the two".
+
+It's worth noting that in OCaml, `[ x; y ]` is syntactic sugar for `x :: y :: []` which is further syntactic sugar for `( :: ) (x, ( :: ) (y, []))`. This
+gives us a much more natural way to specify list literals:
+
+```ocaml
+[ 1; 2 ];;
+- : int list = (::) (1, (::) (2, []))
+```
+
+How can we index into a list? The standard library gives us a function, `List.nth`:
+
+```ocaml
+List.nth;;
+- : 'a list -> int -> 'a = <fun>
+```
+
+This type signature should make sense. Given a list of `'a`s and an integer
+index, retrieve the element at that index which is of type `'a`.
+
+```ocaml
+List.nth [ 1 ] 0;;
+- : int = 1
+```
+
+However, what this type signature does not capture is that this function can
+raise an exception if the index is out of bounds[^3].
+
+```ocaml
+List.nth [ 1 ] 1;;
+Exception: (Failure nth)
+Raised at Stdlib.failwith in file "stdlib.ml", line 29, characters 17-33
+```
+
+### <IM>\mathbb{N}</IM> as Types
+
+Our first observation is that the `list` type encodes information about the type
+of its elements, but not about its length. If we want the type system to make it
+impossible to express indexing operations that violate our bounds, then we need
+some way to encode numbers as types. Therefore, we first turn our attention to
+encoding each natural number in <IM>\mathbb{N}</IM> as a distinct type.
+
+```ocaml
+module Number = struct
+  type zero = [ `zero ]
+
+  type 'n succ = [ `succ of 'n ]
+
+  type 'n t =
+    | Zero : zero t
+    | Succ : 'n t -> 'n succ t
+end
+```
+
+Let's break this down. We first declare two types as singleton polymorphic
+variables: `zero` whose only constructor is `` `zero ``, and `'n succ` whose
+only constructor is `` `succ of 'n ``. These give us names for the type
+parameters we'll use next. Finally, we declare the type `'n t`as a generalized
+algebraic data type (GADT) with two constructors. The first constructor,`Zero`,
+gives us a value of type `zero t`. The second constructor, `Succ`, takes some
+`'n t`and gives us a value of type`'n succ t`.
+
+This should indeed sound familiar; this is an inductive definition of the
+natural numbers. That is, you can specify the number zero using `Zero`. If you
+have a number <IM>n</IM>, you can specify <IM>\mathsf{succ}(n)</IM> using `Succ`.
+Moreover, the value's type fully encodes the semantic number it is associated
+with.
+
+```ocaml
+open Number
+
+let zero : zero t           = Zero
+let one  : zero succ t      = Succ Zero
+let two  : zero succ succ t = Succ (Succ Zero)
+```
+
+### Typed Lengths
+
+Now that we have a type for natural numbers, we can move on to defining our list
+type that encodes its length.
+
+```ocaml
+module List = struct
+  type ('a, 'len) t =
+    | [] : ('a, Number.zero Number.t) t
+    | ( :: ) : 'a * ('a, 'len Number.t) t -> ('a, 'len Number.succ Number.t) t
+end
+```
+
+This should look very similar to the original definition of `'a list`, except
+we've introduced an additional parameter for the length: `'len`. Additionally,
+we're using GADTs to "refine" the type of the value you get when using either of
+the two constructors. In particular, the empty list `[]` is polymorphic in the
+element, but its length is fixed as `Number.zero Number.t`. Similarly, given an
+element and a list of length `'len Number.t`, the constructor `( :: )` produces
+a list of elements of length `'len Number.succ Number.t`. Let's see this in
+action.
+
+```ocaml
+let nil       : (Number.zero Number.t, 'a) List.t                             = List.[]
+let singleton : (Number.zero Number.succ Number.t, int) List.t                = List.[ 1 ]
+let pair      : (Number.zero Number.succ Number.succ Number.t, string) List.t = List.[ "a"; "b" ]
+```
+
+Recall that the original `List.nth` function could raise an exception if the
+provided index was out of bounds. Now that we have lists that typefully encode
+their length, let's create a type-safe version of `List.nth`.
+
+The first thing you may realize is that the type signature `val nth : ('a, 'len) List.t -> n:'n Number.t -> 'a` is actually insufficient. Nothing reflects that
+the number `'n` is less than the number `'len`', so we have no guarantees that
+the argument `n` will be within bounds. We can address this by introducing a
+type to "prove" that a `'x` is less than a `'y`.
+
+```ocaml
+module LT = struct
+  type ('x, 'y) t =
+    (* For any x, 0 is less than succ(x) *)
+    | Zero : 'x Number.t -> (Number.zero Number.t, 'x Number.succ Number.t) t
+    (* For any x, x is less than succ(x) *)
+    | Succ : 'x Number.t -> ('x Number.t, 'x Number.succ Number.t) t
+    (* For any x and y, if x < y and y < z, then x < z *)
+    | Trans :
+        ('x Number.t, 'y Number.t) t * ('y Number.t, 'z Number.t) t
+        -> ('x Number.t, 'z Number.t) t
+end
+```
+
+By carefully encoding some basic axioms and rules via our constructors, we've
+defined a type whose values serve as proofs that some number `'x` is less than
+another number `'y`.
+
+### Footnotes
+
+[^1]:
+    I wrote about a programming language with a sophisticated dependent typing
+    implementation in [another post](/lean-type-safety).
+
+[^2]:
+    A striking example is that of [sum
+    types](https://en.wikipedia.org/wiki/Tagged_union), which many popular
+    programming languages do not support as a first-class primitive.
+
+[^3]:
+    For OCaml to express this in the type system would require a feature called
+    [algebraic effects](https://en.wikipedia.org/wiki/Effect_system).

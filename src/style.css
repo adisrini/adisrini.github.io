@@ -66,8 +66,8 @@
   --color-bookish-tag-tax: #ffedd5;
   --color-project-tag: #16a34a;
   --color-project-tag-text: #dcfce7;
-  --color-misc-tag: #7c3aed;
-  --color-misc-tag-text: #ede9fe;
+  --color-misc-tag: #1e40af;
+  --color-misc-tag-text: #dbeafe;
   --color-compilers-tag: #ea580c;
   --color-compilers-tag-text: #ffedd5;
   --color-hardware-tag: #16a34a;
@@ -474,6 +474,14 @@ code {
   background-color: var(--color-code-background);
   padding: var(--spacing-0) var(--spacing-1);
   border-radius: var(--spacing-1);
+}
+
+pre {
+  padding: var(--spacing-4);
+  border-radius: var(--spacing-1);
+  border: 1px solid var(--color-text-light);
+  font-family: "Fira Code";
+  overflow-x: auto;
 }
 
 /* Material UI overrides */
